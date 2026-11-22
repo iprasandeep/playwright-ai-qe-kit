@@ -12,12 +12,10 @@ src/pages/             locators + user actions
 src/assertions/        reusable expects (validators)
 src/fixtures/          TodoPage injection + AI failure notes
 src/ai/                locator hints + failure summarizer
-.github/workflows/     CI: install chromium → test → upload report
+.github/workflows/     CI: lint → typecheck → browsers → test → artifacts
 ```
 
 Flow: **test → page actions → assertions → (on fail) AI note + trace/screenshot**
-
-Same layering idea as the mobile Appium and API RestAssured portfolio repos.
 
 ## Prerequisites
 
@@ -28,17 +26,33 @@ Same layering idea as the mobile Appium and API RestAssured portfolio repos.
 
 ```bash
 npm ci
-npx playwright install chromium
+npx playwright install chromium firefox
 ```
 
 ## Run tests
 
 ```bash
-npm test                 # all tests (headless)
-npm run test:sanity      # smoke path only
-npm run test:ui          # Playwright UI mode
+npm test                 # Chromium full suite + Firefox @smoke
+npm run test:smoke       # @smoke tags only
+npm run test:sanity      # sanity file only
+npm run test:ui          # Playwright UI mode (watch live)
+npm run test:headed      # visible browser windows
 npm run report           # open last HTML report
+npm run lint             # ESLint
+npm run typecheck        # tsc --noEmit
 ```
+
+### Tags & browsers
+
+| Tag / project | Behavior |
+|---------------|----------|
+| `@smoke` | Sanity happy path, one CRUD, API mock |
+| `chromium` | Full suite |
+| `firefox` | `@smoke` only (cross-browser without doubling runtime) |
+
+## API mock
+
+`tests/api-mock.spec.ts` uses `page.route` to stub `/api/todos`, assert the mock was hit, then seeds the TodoMVC UI from the JSON (network stub + UI verification).
 
 ## AI helper
 
@@ -58,14 +72,10 @@ npm test
 
 ## CI
 
-Every push/PR on `main` runs Chromium tests and uploads:
+Every push/PR on `main` runs:
 
-- `playwright-report/` (HTML)
-- `test-results/` (traces, screenshots, AI notes on failure)
-
-## Interview talking points
-
-- Auto-waiting + retrying assertions vs classic explicit waits
-- POM + fixtures instead of fat tests
-- Trace viewer for flake debugging
-- AI as **assist** (summaries/hints), not as the test oracle
+1. `npm run lint`
+2. `npm run typecheck`
+3. Chromium + Firefox Playwright install
+4. Full test run (Chromium all + Firefox `@smoke`)
+5. Upload `playwright-report/` and `test-results/`

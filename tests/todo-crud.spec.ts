@@ -1,7 +1,7 @@
-import { test, expect } from '../src/fixtures/test-fixtures';
+import { test } from '../src/fixtures/test-fixtures';
 
 test.describe('Todo CRUD', () => {
-  test('adds a single todo', async ({ todoPage, todoAssert }) => {
+  test('adds a single todo', { tag: '@smoke' }, async ({ todoPage, todoAssert }) => {
     await todoPage.addTodo('Buy milk');
     await todoAssert.expectVisibleTodos(['Buy milk']);
     await todoAssert.expectRemainingCount('1 item left');

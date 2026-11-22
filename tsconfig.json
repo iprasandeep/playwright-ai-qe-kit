@@ -7,7 +7,8 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "types": ["node"],
+    "noEmit": true,
+    "types": ["node", "@playwright/test"],
     "baseUrl": ".",
     "paths": {
       "@pages/*": ["src/pages/*"],

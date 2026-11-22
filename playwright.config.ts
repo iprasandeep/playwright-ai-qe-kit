@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
 /**
- * Playwright AI QE Kit — chromium sanity against public TodoMVC demo.
+ * Playwright AI QE Kit — Chromium full suite + Firefox smoke against TodoMVC.
  * @see https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
@@ -24,6 +24,12 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      // Cross-browser signal without doubling full suite runtime
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] },
+      grep: /@smoke/,
     },
   ],
 });

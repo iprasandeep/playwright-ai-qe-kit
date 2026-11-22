@@ -6,11 +6,14 @@
   "license": "MIT",
   "scripts": {
     "test": "playwright test",
+    "test:smoke": "playwright test --grep @smoke",
     "test:sanity": "playwright test tests/sanity.suite.spec.ts",
     "test:ui": "playwright test --ui",
     "test:headed": "playwright test --headed",
     "report": "playwright show-report",
-    "codegen": "playwright codegen https://demo.playwright.dev/todomvc"
+    "codegen": "playwright codegen https://demo.playwright.dev/todomvc",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [
     "playwright",
@@ -20,7 +23,12 @@
     "ai-qe"
   ],
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.65.1",
-    "@types/node": "^26.6.6"
+    "@types/node": "^26.6.6",
+    "eslint": "^10.15.0",
+    "eslint-plugin-playwright": "^2.12.2",
+    "typescript": "~5.9.0",
+    "typescript-eslint": "^8.73.0"
   }
 }
