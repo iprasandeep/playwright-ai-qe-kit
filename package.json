@@ -1,0 +1,26 @@
+{
+  "name": "playwright-ai-qe-kit",
+  "version": "1.0.0",
+  "description": "Playwright TypeScript E2E kit with POM, CI, and AI-assisted failure notes",
+  "author": "prasandeep",
+  "license": "MIT",
+  "scripts": {
+    "test": "playwright test",
+    "test:sanity": "playwright test tests/sanity.suite.spec.ts",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed",
+    "report": "playwright show-report",
+    "codegen": "playwright codegen https://demo.playwright.dev/todomvc"
+  },
+  "keywords": [
+    "playwright",
+    "e2e",
+    "typescript",
+    "sdet",
+    "ai-qe"
+  ],
+  "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "@types/node": "^26.6.6"
+  }
+}
